@@ -1,0 +1,117 @@
+body {
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body > div {
+    background-color: rgb(255, 255, 255);
+    padding: 4px;
+    width: fit-content;
+}
+body > div > div:first-child {
+    position: relative;
+}
+body > div > div:first-child > :first-child {
+    position: relative;
+    margin: 10px 12px;
+    margin-bottom: 0;
+    padding-left: 10px;
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    height: 40px;
+    width: 200px;
+    outline: none;
+}
+
+body > div > div:first-child .opr {
+    display: none;
+}
+.imk img {
+    opacity: 0.5;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    width: 35px;
+    cursor: pointer;
+    transition: opacity 300ms;
+    filter: brightness(0) saturate(100%) invert(33%) sepia(54%) saturate(3246%)
+        hue-rotate(1deg) brightness(104%) contrast(107%);
+}
+.imk img:hover {
+    opacity: 1;
+}
+
+/* 
+body > div >div:first-child::after{
+    content: '';
+    position: absolute;
+
+    top: 23px;
+    right: 26px;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background-color: transparent;
+    border: 2px solid black ;
+    border-top: none;
+    border-right: none;
+    transform: rotateZ(45deg)
+} */
+.oprc .cc {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    border-radius: 5px;
+    display: flex;
+    gap: 4px;
+}
+.oprc .cc > .opr {
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.container > div > :not(div) {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    transition: 300ms;
+}
+.container .num:hover {
+    background-color: #dcdcdc;
+}
+.container {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    width: fit-content;
+    padding: 10px;
+}
+.container .numc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.container .oprc {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.container .opr {
+    background-color: rgb(42, 168, 78);
+    color: white;
+}
+.container .opr:hover {
+    background-color: rgb(38, 125, 14);
+}
+#buta {
+    background-color: rgb(255, 77, 0);
+    color: white;
+}
+
+#bute {
+    /* grid-column: 1/3; */
+    /* width: 40px; */
+    border-radius: 5px;
+    background-color: rgb(0, 89, 255);
+}
