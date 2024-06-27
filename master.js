@@ -98,33 +98,33 @@ function calc0(a, b, key) {
     console.log("switch calc-->", a, key, b);
     switch (key) {
         case "+":
-            c = a + b;
+            a += b;
             break;
         case "-":
-            c = a - b;
+            a -= b;
             break;
         case "x":
-            c = a * b;
+            a *= b;
             break;
         case "/":
-            c = a / b;
+            a /= b;
             break;
         case "^":
-            c = a ** b;
+            a **= b;
             break;
         default:
             break;
     }
-    return c;
+    return a;
 }
 function calc2(text) {
     //!__________________Pattern
     const pat = /([x/^][-+]*|[-+]+)|[\(\)]/g;
     const patnum = /[-+]*\d+(\.\d*)?/g;
-    text = "1+(1+(6+(4+(1+1))))";
-    // text = "1+(1+(6+2)-2)+1";
+    // text = "1+2-3^2x4-2";
+    // text = "(((1)))";
+    // text = "1+(1+(1+(6+2)+(5x2)-2)+1)";
     console.log(text);
-
     console.log(text.match(patnum));
     console.log(text.match(pat));
     a = text.match(pat);
@@ -132,7 +132,7 @@ function calc2(text) {
     let out;
     //!__________________End Pattern
 
-    //!_____________(sign)
+    //!______________________(sign)
     if (b[0].slice(0, 1) == "-" || b[0].slice(0, 1) == "+") {
         for (let index = 0; index < a.length; index++) {
             a[index] = a[index + 1];
@@ -174,13 +174,32 @@ function calc2(text) {
     }
     console.log("sign-->", b, a);
     //!_____________(end sign)
-    return core(0, a.length);
+    return core(0);
 }
-function core(i, end) {
+let counter = 0;
+function core(i) {
     let out;
+    let place = i;
     while (a.length > 0) {
-        let place,
-            counter = 0;
+        if (a[place] == ")") {
+            console.log("1------------>", a);
+            for (let j = place; j < a.length; j++) {
+                a[j] = a[j + 1];
+            }
+            console.log("1------------>", a);
+            a.pop();
+            place--;
+            console.log("1------------>", a);
+            for (let j = place; j < a.length; j++) {
+                a[j] = a[j + 1];
+            }
+            a.pop();
+            console.log("1------------>", a);
+            counter--;
+            return "done";
+        }
+        console.log("pp---------->>>>", place, i);
+
         if (a[i + 2] == "^" && a[i + 1] != "(") {
             place = i + 2;
         } else if (
@@ -193,109 +212,33 @@ function core(i, end) {
         } else {
             place = i;
         }
-        //!______________________________________________________________cc
-        while (a[place] == "(") {
+        if (a[place] == "(") {
+            console.log("p---------->>>>", place, i);
             counter++;
-            if (a[place + 1] == ")") {
-                console.log("1------------>", a);
-
-                for (let j = place; j < a.length; j++) {
-                    a[j] = a[j + 1];
-                }
-                console.log("1------------>", a);
-                a.pop();
-                console.log("1------------>", a);
-                for (let j = place; j < a.length; j++) {
-                    a[j] = a[j + 1];
-                }
-                a.pop();
-                console.log("1------------>", a);
-                place--;
-                counter--;
-            } else {
-                place++;
-                if (a[place] != "(") {
-                    counter++;
-                }
-                if (a[place + 1] == "(" && a[place] != "(") {
-                    // counter++;
-                    place++;
-                }
+            console.log(core(place + 1));
+            place--;
+            if (place < i) {
+                i--;
             }
-        }
-        //!______________________________________________________________
-
-        // if (a[place] == "(") {
-        //     if (a[place + 1] == ")") {
-        //         console.log("1------------>", a);
-
-        //         for (let j = place; j < b.length; j++) {
-        //             a[j] = a[j + 1];
-        //         }
-        //         console.log("1------------>", a);
-        //         a.pop();
-        //         console.log("1------------>", a);
-        //         for (let j = place; j < b.length; j++) {
-        //             a[j] = a[j + 1];
-        //         }
-        //         a.pop();
-        //         console.log("1------------>", a);
-        //         place = place;
-        //     } else {
-        //         console.log("before while--------->", a[place], place);
-
-        //         do {
-        //             counter++;
-        //             place++;
-        //             console.log("while--------->", a[place], place);
-        //         } while (a[place] == "(");
-        //         // place = place + counter;
-        //         console.log("after while--------->", a[place], place);
-
-        //         console.log("2------------>", a, a[place]);
-        //     }
-        // } else {
-        //     console.log("3------------>", a);
-        //     place = place;
-        // }
-        //!______________________________________________________________
-
-        console.log("4------------>", a);
-        let numplace = place - counter;
-        if (a[place - 1] == "(") {
-            // place = place+counter;
-            out = calc0(Number(b[numplace]), Number(b[numplace + 1]), a[place]);
-            b[numplace] = out;
-            console.log("place=", place, counter);
-            for (let j = place; j < a.length; j++) {
-                a[j] = a[j + 1];
-            }
-            for (let j = numplace + 1; j < b.length; j++) {
-                b[j] = b[j + 1];
-            }
-            //!!_________________________________________
         } else {
+            let numplace = place - counter;
             out = calc0(Number(b[numplace]), Number(b[numplace + 1]), a[place]);
             b[numplace] = out;
-            // for (let j = place + 1; j < b.length - 1; j++) {
-            //     b[j] = b[j + 1];
-            //     a[j - 1] = a[j];
-            // }
-            for (let j = place; j < a.length; j++) {
-                a[j] = a[j + 1];
-            }
-            for (let j = numplace + 1; j < b.length; j++) {
+            for (let j = numplace + 1; j < b.length - 1; j++) {
                 b[j] = b[j + 1];
             }
+            for (let j = place; j < a.length - 1; j++) {
+                a[j] = a[j + 1];
+            }
+            console.log("---------->>>>", place);
+            b.pop();
+            a.pop();
+            console.log(b, a, out);
         }
-
-        console.log("---------->>>>", place, counter);
-        b.pop();
-        a.pop();
-        console.log(b, a, out);
     }
-    return out;
+    return b[0];
 }
+
 function sign(sig) {
     console.log(sig);
 
