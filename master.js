@@ -124,6 +124,7 @@ function calc2(text) {
     // text = "1+2-3^2x4-2";
     // text = "(((1)))";
     // text = "1+(1+(1+(6+2)+(5x2)-2)+1)";
+    // text = "6x5+(9+6+6)^(1+1)";
     console.log(text);
     console.log(text.match(patnum));
     console.log(text.match(pat));
@@ -200,7 +201,10 @@ function core(i) {
         }
         console.log("pp---------->>>>", place, i);
 
-        if (a[i + 2] == "^" && a[i + 1] != "(") {
+        if (
+            (a[i + 2] == "^" && a[i + 1] != ")" && a[i + 3] != "(") ||
+            a[i + 2] == "("
+        ) {
             place = i + 2;
         } else if (
             a[i + 1] == "x" ||
