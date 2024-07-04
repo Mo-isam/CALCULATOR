@@ -47,7 +47,6 @@ document.getElementById("butp").onclick = function () {
     v = document.getElementById("text").value;
     document.getElementById("text").value = v + 3.14;
 };
-
 document.getElementById("butd").onclick = function () {
     v = document.getElementById("text").value.slice(0, -1);
     document.getElementById("text").value = v;
